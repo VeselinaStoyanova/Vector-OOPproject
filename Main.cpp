@@ -86,6 +86,6 @@ int main()
 		cout << Dolphin[i] << " ";
 	}
 	cout << endl;
-	system("pause");
+
 	return 0;
 }

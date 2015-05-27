@@ -76,7 +76,7 @@ public:
 	* @param new_capacity нов капацитет
 	* @return
 	*/
-	//void reserve(size_t newCapacity);
+	void reserve(size_t newCapacity);
 
 	/**
 	* Преоразмерява векторът, така, че да съдържа new_size елемента
@@ -175,8 +175,8 @@ private:
 	*/
 	static T* allocateMemory(size_t capacityAlloc)
 	{
-		return static_cast<T*> (operator new(sizeof(T)* capacityAlloc));
-	}
+		return static_cast<T*> (operator new(sizeof(T)* capacityAlloc)); 
+	} 
 
 	/**
 	* Копира елементите от посочения обхват (опеределн от begin и end) в destination.
@@ -232,7 +232,7 @@ private:
 	}
 
 	/**
-	* Конструира с конструктор, приемащ стойност fill_value обектите върху паметта, определена от обхвата begin и end
+	* Конструира с конструктор, приемащ стойност fill_value ,oбектите върху паметта, определена от обхвата begin и end
 	* @param begin - указател към началото
 	* @param end - указател към края
 	* @return
@@ -360,7 +360,7 @@ Vector<T>& Vector<T>::operator=(const Vector<T> & other)
 	return *this;
 }
 
-/*template<typename T>
+template<typename T>
 void Vector<T>::reserve(size_t newCapacity)
 {
 if (newCapacity > capacity_)
@@ -385,7 +385,7 @@ operator delete(data);
 data = newData;
 capacity_ = newCapacity;
 }
-}*/
+}
 
 template<typename T>
 void Vector<T>::resize(size_t newSize)
@@ -520,21 +520,20 @@ void Vector<T>::insert(size_t index, const T& value)
 {
 	if (index <= size_ && index > 0)
 	{
-		// заделяме памет с размер capacity_ (необходимо е защото не знаем къде ще вмъкнем елемент) x2
-		// поставяме указатели към тези парчета памет
+		// заделяме памет с размер capacity_ 
 		T* newDataBegin = allocateMemory(capacity_);
 		T* newDataEnd = allocateMemory(capacity_);
 		try
 		{
-			//копираме старите стойности от data[0] do data[index-1] v единия указател
+			//копираме старите стойности от data[0] до data[index-1] в единия указател
 			copyRange(data, data + index - 1, newDataBegin);
-			//копираме старите стойности от data[index-1] do data[size-1] v единия указател
+			//копираме старите стойности от data[index-1] до data[size-1] в единия указател
 			copyRange(data + index - 1, data + size_, newDataEnd);
 
 			++capacity_;
 			//заделяме си нова памет за вектора
 			data = allocateMemory(capacity_);
-			// на дата[index - 1 ] (index e mqsto) слагаме стойност value
+			// на дата[index - 1 ]  слагаме стойност value
 			new((void*)(data + index - 1)) T(value);
 
 			//поставяме си стойностите на старото им място 
@@ -545,7 +544,7 @@ void Vector<T>::insert(size_t index, const T& value)
 		}
 		catch (...)
 		{
-			//делете указател 
+			
 			operator delete(newDataBegin);
 			operator delete(newDataEnd);
 			throw;
@@ -585,7 +584,6 @@ void Vector<T>::swap(Vector<T> &other)
 		return;
 	}
 
-	///като размяна на два инт;
 
 	T* thirdWheel = allocateMemory(capacity_);
 	size_t changeSize;
@@ -597,7 +595,7 @@ void Vector<T>::swap(Vector<T> &other)
 		copyRange(other.data, other.data + size_, data);
 		copyRange(thirdWheel, thirdWheel + size_, other.data);
 
-		/// горе е аналогично като следващите размени;
+	
 		changeCapacity = capacity_;
 		capacity_ = other.capacity_;
 		other.capacity_ = changeCapacity;
@@ -623,7 +621,7 @@ void Vector<T>::print() const
 	int i = 0;
 	while (i < size_)
 	{
-		//4rez *(ukazatel) se izkarwa stoinost
+		
 		cout << *(data + i) << " ";
 		i++;
 	}
@@ -632,7 +630,7 @@ void Vector<T>::print() const
 template<typename T>
 bool Vector<T>::empty()
 {
-	//po adresi 
+	
 	if (data == data + size_ - 1)
 	{
 		return true;
